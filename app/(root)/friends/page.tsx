@@ -1,14 +1,19 @@
-import ConversationFallback from '@/components/ui/shared/conversation/ConversationFallback'
-import ItemList from '@/components/ui/shared/item-list/ItemList'
-import React from 'react'
+import ConversationFallback from "@/components/ui/shared/conversation/ConversationFallback";
+import ItemList from "@/components/ui/shared/item-list/ItemList";
+import React from "react";
+import AddFriendDialog from "./_components/AddFriendDialog";
 
-type Props = {}
+type Props = {};
 
 const FriendsPage = (props: Props) => {
   return (
-    <><ItemList title='เพื่อน'>FriendsPage</ItemList>
-    <ConversationFallback/></>
-  )
-}
+    <>
+      <ItemList title="เพื่อน" action={<AddFriendDialog />}>
+        FriendsPage
+      </ItemList>
+      <ConversationFallback />
+    </>
+  );
+};
 
-export default FriendsPage
+export default FriendsPage;
