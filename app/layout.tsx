@@ -5,6 +5,7 @@ import ConvexClientProvider from "@/providers/ConvexClientProvider";
 import { SignIn, SignedOut, SignedIn, ClerkProvider } from "@clerk/nextjs";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/ui/theme/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,16 +22,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider             attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange>
-        <ConvexClientProvider>
-          <TooltipProvider>
-            {children}
-            </TooltipProvider>
-        </ConvexClientProvider>
-      </ThemeProvider></body>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ConvexClientProvider>
+            <TooltipProvider>{children}</TooltipProvider>
+            <Toaster richColors />
+          </ConvexClientProvider>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

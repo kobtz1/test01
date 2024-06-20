@@ -35,7 +35,7 @@ export const create = mutation({
       .query("requests")
       .withIndex("by_receiver_sender", (q) =>
         q.eq("receiver", receiver._id).eq("sender", currenUser._id)
-      );
+      ).unique();
 
     if (requestAlreadySent) {
       throw new ConvexError("ส่งคำขอเรียบร้อย");
@@ -44,15 +44,14 @@ export const create = mutation({
       .query("requests")
       .withIndex("by_receiver_sender", (q) =>
         q.eq("receiver", currenUser._id).eq("sender", receiver._id)
-      );
-      if (requestAlreadyReceived){
-        throw new ConvexError("ผู้ใช้รายนี้ได้ส่งคำขอถึงคุณแล้ว")
-      }
-      const requests = await ctx.db.insert
-      ("requests", {
-        sender: currenUser._id,
-        receiver: receiver._id,
-      })
-      return requests;
+      ).unique();
+    if (requestAlreadyReceived) {
+      throw new ConvexError("ผู้ใช้รายนี้ได้ส่งคำขอถึงคุณแล้ว");
+    }
+    const request = await ctx.db.insert("requests", {
+      sender: currenUser._id,
+      receiver: receiver._id,
+    });
+    return request;
   },
 });

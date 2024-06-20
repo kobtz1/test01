@@ -30,12 +30,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useMutationState } from "@/hook/useMutationState";
+import { toast } from "sonner";
+import { ConvexError } from "convex/values";
 import { api } from "@/convex/_generated/api";
 
-
-
-
-type Props = {};
 
 const addFriendFormSchema = z.object({
   email: z
@@ -44,10 +42,8 @@ const addFriendFormSchema = z.object({
     .email("กรุณาใส่อีเมลที่ถูกต้อง"),
 });
 
-const AddFriendDialog = (props: Props) => {
-  const { mutate: createRequest, pending } 
-  = useMutationState(api);
-
+const AddFriendDialog = () => {
+  const { mutate: createRequest, pending } = useMutationState(api.request.create);
   const form = useForm<z.infer<typeof addFriendFormSchema>>({
     resolver: zodResolver(addFriendFormSchema),
     defaultValues: {
@@ -59,8 +55,13 @@ const AddFriendDialog = (props: Props) => {
     await createRequest({ email: values.email })
       .then(() => {
         form.reset();
+        toast.success("ส่งคำขอเป็นเพื่อน!");
       })
-      .catch((error) => {});
+      .catch((error) => {
+        toast.error(
+          error instanceof ConvexError ? error.data : "พบข้อผิดหลาดบางอย่าง"
+        );
+      });
   };
   return (
     <Dialog>
