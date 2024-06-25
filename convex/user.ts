@@ -1,5 +1,6 @@
 import { v } from "convex/values";
 import { internalMutation, internalQuery } from "./_generated/server";
+import { PhoneNumber } from "@clerk/nextjs/dist/types/server";
 
 export const create = internalMutation({
     args: {
@@ -7,7 +8,8 @@ export const create = internalMutation({
         imageUrl: v.string(),
         clerkId: v.string(),
         email: v.string(),
-    },
+        //PhoneNumber: v.string(),
+      },
     handler: async (ctx, args) => {
         await ctx.db.insert("users", args);
     },

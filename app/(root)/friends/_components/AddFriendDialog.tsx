@@ -55,7 +55,7 @@ const AddFriendDialog = () => {
     await createRequest({ email: values.email })
       .then(() => {
         form.reset();
-        toast.success("ส่งคำขอเป็นเพื่อน!");
+        toast.success("ส่งคำขอเป็นเพื่อนสำเร็จ");
       })
       .catch((error) => {
         toast.error(
@@ -101,7 +101,7 @@ const AddFriendDialog = () => {
               )}
             />
             <DialogFooter>
-              <Button disabled={false} type="submit">
+              <Button disabled={pending} type="submit">
                 ส่งคำขอ
               </Button>
             </DialogFooter>

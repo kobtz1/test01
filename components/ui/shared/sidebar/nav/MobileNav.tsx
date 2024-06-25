@@ -1,4 +1,5 @@
 "use client";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ThemeToggle } from "@/components/ui/theme/theme-toggle";
@@ -34,6 +35,9 @@ className="fixed bottom-4 w-[calc(100vw-32px)] h-16 p-2 flex items-center justif
                       >
                         {path.icon}
                       </Button>
+                      {path.count ? (
+                        <Badge className="absolute left-7 bottom-6 px-2">{path.count}</Badge>
+                      ) : null}
                     </TooltipTrigger>
                     <TooltipContent>
                       <p>{path.name}</p>

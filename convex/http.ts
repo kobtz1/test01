@@ -49,6 +49,7 @@ const handlerClerkWebhook = httpAction(async (ctx, req) => {
         imageUrl: event.data.image_url,
         clerkId: event.data.id,
         email: event.data.email_addresses[0].email_address,
+        //PhoneNumber: event.data.phone_numbers[0].phone_number
       });
       break;
     }
