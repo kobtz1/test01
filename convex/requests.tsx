@@ -10,16 +10,16 @@ export const get = query({
     if (!identity) {
       throw new Error("ไม่ได้รับอนุญาติ");
     }
-    const currenUser = await getUserByClerkId({
+    const currentUser = await getUserByClerkId({
       ctx,
       clerkId: identity.subject,
     });
-    if (!currenUser) {
+    if (!currentUser) {
       throw new ConvexError("ไม่พบผู้ใช้");
     }
     const requests = await ctx.db
       .query("requests")
-      .withIndex("by_receiver", (q) => q.eq("receiver", currenUser._id))
+      .withIndex("by_receiver", (q) => q.eq("receiver", currentUser._id))
       .collect();
 
     const requestsWitSender = await Promise.all(
@@ -38,9 +38,9 @@ export const get = query({
 });
 
 export const count = query({
-    args: {},
-    handler: async (ctx, args) => {
-        const identity = await ctx.auth.getUserIdentity();
+  args: {},
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
 
     if (!identity) {
       throw new Error("ไม่ได้รับอนุญาติ");
@@ -54,10 +54,10 @@ export const count = query({
     }
 
     const requests = await ctx.db
-    .query("requests")
-    .withIndex("by_receiver", (q) => q.eq("receiver", currenUser._id))
-    .collect();
+      .query("requests")
+      .withIndex("by_receiver", (q) => q.eq("receiver", currenUser._id))
+      .collect();
 
     return requests.length;
-    },
-})
+  },
+});
